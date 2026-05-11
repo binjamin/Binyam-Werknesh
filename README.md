@@ -1,2 +1,0 @@
-# Binyam-Werknesh
-Wedding
