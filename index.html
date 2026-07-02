@@ -4,228 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>የሰርግ ግብዣ | Wedding Invitation</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&family=Noto+Serif+Ethiopic:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Cinematic Intro Section -->
-    <section id="cinematic-intro" class="cinematic-intro">
-        <div class="slideshow-container">
-            <div class="slide active">
-                <img src="assets/images/Habesha kaba.jpg" alt="Bride and Groom">
-            </div>
-            <div class="slide">
-                <img src="assets/images/Habesha kaba (1).jpg" alt="Couple Portrait">
-            </div>
-            <div class="slide">
-                <img src="assets/images/Habesha kaba.jpg" alt="Wedding Moments">
-            </div>
-        </div>
+    <style>
+        /* ==========================================================================
+           1. CSS STYLES (styles.css የነበረው)
+           ========================================================================== */
+        :root {
+            --bg-color: #fffdf9;
+            --text-color: #2c2520;
+            --primary-color: #8a1c14; /* ደማቅ ቀይ የጥበብ ቀለም */
+            --secondary-color: #115740; /* አረንጓዴ */
+            --accent-color: #d4af37; /* ወርቃማ */
+            --card-bg: #ffffff;
+            --shadow: rgba(138, 28, 20, 0.1);
+        }
+
+        /* ለሊት (Dark Mode) ማስተካከያ */
+        [data-theme="dark"] {
+            --bg-color: #1a1613;
+            --text-color: #f5f0eb;
+            --primary-color: #e5b842;
+            --secondary-color: #a3d1bd;
+            --card-bg: #26201b;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Serif Ethiopic', 'Playfair Display', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.5s, color 0.5s;
+        }
+
+        /* ሲኒማቲክ መግቢያ (Intro Section) */
+        .cinematic-intro {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slideshow-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(45%);
+        }
+
+        .slide.active { opacity: 1; }
+
+        .intro-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: #ffffff;
+            padding: 0 20px;
+        }
+
+        .couple-names {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            font-family: 'Playfair Display', serif;
+        }
         
-        <div class="intro-content">
-            <h1 class="couple-names">
-                <span class="groom-name">እድላዊት</span>
-                <span class="ampersand">&</span>
-                <span class="bride-name">ቃለአብ</span>
-            </h1>
-            <p class="intro-date">ግንቦብ 24, 2018</p>
-            <button id="enter-btn" class="enter-btn">Enter Invitation</button>
-        </div>
-        
-        <div class="audio-controls">
-            <button id="mute-btn" class="mute-btn">🔊</button>
-            <audio id="bg-music" loop autoplay>
-                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-            </audio>
-            <iframe id="youtube-player" style="display:none;" allow="autoplay" src="https://www.youtube.com/embed/6pxWB0HW3aY?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=6pxWB0HW3aY"></iframe>
-        </div>
-    </section>
+        .ampersand {
+            display: block;
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin: 10px 0;
+        }
 
-    <!-- Main Invitation Section -->
-    <section id="main-invitation" class="main-invitation hidden">
-        <!-- Theme Toggle -->
-        <div class="theme-toggle">
-            <label class="switch">
-                <input type="checkbox" id="theme-switch">
-                <span class="slider round">
-                    <span class="sun-icon">☀️</span>
-                    <span class="moon-icon">🌙</span>
-                </span>
-            </label>
-        </div>
+        .intro-date {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
 
-        <!-- Header -->
-        <header class="header">
-            <div class="header-image">
-                <img src="assets/images/Habesha kaba (1).jpg" alt="Wedding Header">
-            </div>
-            <div class="header-content">
-                <h1 class="main-title">የሰርግ ግብዣ</h1>
-                <div class="bible-verses">
-                    <p class="verse">ዘፍጥረት 2:24</p>
-                    <p class="verse-text">"ሰው አባቱንና እናቱን ይተው ከሚስቱም ጋር ይጣበቃል፤ ሁለቱም አንድ ሥጋ ይሆናሉ።"</p>
-                    <p class="verse">1 ቆሮንቶስ 13:4-7</p>
-                    <p class="verse-text">"ፍቅር ይታገሣል፥ ይርሳል… ሁሉን ይሸከማል፥ ሁሉን ያምናል፥ ሁሉን ይተስፋል፥ ሁሉን ይታገሣል።"</p>
-                </div>
-            </div>
-        </header>
+        .enter-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 15px 45px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-        <!-- Invitation Letter -->
-        <section class="invitation-letter">
-            <div class="letter-content">
-                <h2>የግብዣ መልዕክት</h2>
-                <p class="invitation-text">
-                    በእግዚአብሔር ፍቅር እና በቤተሰቦቻችን ቡራኬ፣ በዚህ ደስታ ቀን ከእኛ ጋር እንድትካፈሉ በክብር እንጋብዛችኋለን።
-                    የሰርግ ሥነ ሥርዐታችንን በተሳሳብ እንዲያዩንና የፍቅራችንን አዲስ ጉዞ በእርስዎ ተሳትፎ እንዲሞላ እንፈልጋለን።
-                </p>
-            </div>
-        </section>
+        .enter-btn:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
 
-        <!-- Wedding Details -->
-        <section class="wedding-details">
-            <h2>የሰርግ መረጃዎች</h2>
-            <div class="details-grid">
-                <div class="detail-card">
-                    <div class="card-icon">📆</div>
-                    <h3>ቀን</h3>
-                    <p>ግንቦት 24, 2018</p>
-                </div>
-                <div class="detail-card">
-                    <div class="card-icon">⏰</div>
-                    <h3>ሰዓት</h3>
-                    <p>8:00 ጥዋት</p>
-                </div>
-                <div class="detail-card">
-                    <div class="card-icon">📍</div>
-                    <h3>ቦታ</h3>
-                    <p>Atlas Hotel</p>
-                </div>
-            </div>
+        /* ዋናው መረጃ ክፍል */
+        .hidden { display: none !important; }
 
-            <!-- Calendar Component -->
-            <div class="calendar-container">
-                <div class="calendar-header">
-                    <h3>ግንቦት 2018</h3>
-                </div>
-                <div class="calendar-grid">
-                    <div class="calendar-weekdays">
-                        <div>እሁድ</div>
-                        <div>ሰኞ</div>
-                        <div>ማክሰ</div>
-                        <div>ረቡዕ</div>
-                        <div>ሐሙስ</div>
-                        <div>ዓርብ</div>
-                        <div>ቅዳሜ</div>
-                    </div>
-                    <div class="calendar-days">
-                        <!-- Calendar days will be generated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+        .main-invitation {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--bg-color);
+        }
 
-            <!-- Schedule Timeline -->
-            <div class="schedule-timeline">
-                <h3>የተያዙ መርኃግብር</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="time">8:00</div>
-                        <div class="event">የሙሽሮች ግባት</div>
-                        <div class="description">ሙሽሮች ወደ አዳራሽ ይገባሉ ሙሽሮች ሲመጡ ዝማሬ ይኖራል</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">8:30</div>
-                        <div class="event">ቃለ ወንጌል</div>
-                        <div class="description">አባቶች በጽሎት ይክፍታሉ ቃለ ወንጌልን ያስተምራሉ</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">9:00</div>
-                        <div class="event">ማዕድ</div>
-                        <div class="description">ሙሽሮች እንዲሁም እንግዶች ምሳ ያነሳሉ ዝማሬ ይኖራል</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">10:00</div>
-                        <div class="event">ወረብ</div>
-                        <div class="description">በሚዜዎች ፣ አጃቢዎች እንዲሁም ዘማርያን ዕለቱን የሚያወሳ ወረብ</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">10:40</div>
-                        <div class="event">ኬክ ቆረሳ</div>
-                        <div class="description">ሙሽሮች ኬክ ይቆርሳሉ</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">11:00</div>
-                        <div class="event">የመዝጊያ መዝሙር</div>
-                        <div class="description">ታዳሚው ከሙሽሮች ጋር ይዘምራሉ</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">11:30</div>
-                        <div class="event">የሰርግ ፎቶግራፍ</div>
-                        <div class="description">ከሙሽሮች ጋር የፎቶ ፕሮግራም ይኖራል</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="time">12:00</div>
-                        <div class="event">ሙሽሮች ከአዳራሽ የወጣሉ</div>
-                        <div class="description">ሙሽሮች በቤተሰባቸው ፣ ጓደቻቸው ታጅበው ይወጣሉ</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Location Section -->
-        <section class="location-section">
-            <h2>የሰርግ ቦታ</h2>
-            <div class="location-content">
-                <div class="map-container">
-                    <div id="map" class="map-placeholder">
-                        <div class="map-info">
-                            <h3>Atlas Hotel</h3>
-                            <p>📍 Addis Ababa, Ethiopia</p>
-                            <p>Click below for directions</p>
-                        </div>
-                    </div>
-                    <button id="directions-btn" class="directions-btn">📍 አቅጣጫ ይመልከቱ</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Guest Wishes Section -->
-        <section class="guest-wishes">
-            <h2>የእንግዶች የደስታ መግለጫ</h2>
-            <div class="wishes-container">
-                <div class="wish-form">
-                    <input type="text" id="guest-name" placeholder="ስም" class="form-input">
-                    <textarea id="guest-message" placeholder="መልእክት" class="form-textarea"></textarea>
-                    <button id="submit-wish" class="submit-btn">ላክ</button>
-                </div>
-                <div id="wishes-display" class="wishes-display">
-                    <!-- Wishes will be displayed here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Photo Gallery Section -->
-        <section class="photo-gallery">
-            <h2>የእንግዶች ፎቶዎች</h2>
-            <div class="gallery-container">
-                <div class="upload-area">
-                    <input type="file" id="photo-upload" accept="image/*" multiple style="display: none;">
-                    <label for="photo-upload" class="upload-label">
-                        <span class="upload-icon">📸</span>
-                        <span>ፎቶዎችን ይጫኑ ወይም ወደዚህ ይጎትቱ</span>
-                    </label>
-                </div>
-                <div id="photo-grid" class="photo-grid">
-                    <!-- Uploaded photos will be displayed here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2028 እድላዊት & ቃለአብ | በፍቅር የተዋቀረ</p>
-        </footer>
-    </section>
-
-    <script src="script.js"></script>
-</body>
-</html>
+        /* ገጽታ መቀያየሪያ (Theme Switch) */
+        .theme-toggle { text-align: right; margin-bottom: 20px; }
+        .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; box-sizing: border-box;}
+        .slider::beforeNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
